@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CheatSheet - Node Js</title>
+    <link rel="stylesheet" href="Lecture.css">
+</head>
+<body>
+    <h1>Node Js CheatSheet</h1>
+    <h2>File System Module(Sync)</h2>
+    <div class="code"><code><pre>const fs=require('fs');</pre></code></div>
+    <div class="code"><code><pre>fs.mkdirSync('NewFolder');//making a new folder named 'NewFolder'</pre></code></div>
+    <div class="code"><code><pre>cd NewFolder//Now we are in 'NewFolder'</pre></code></div>
+    <div class="code"><code><pre>fs.writeFileSync("NewFile.txt" , "create if 'NewFile.txt' doesn't exist inside 'NewFolder' & add this text");</pre></code></div>
+    <div class="code"><code><pre>fs.appendFileSync("NewFile.txt","append this text inside 'NewFile.txt'");</pre></code></div>
+    <div class="code"><code><pre>const text=fs.readFileSync('NewFile.txt','utf8');
+console.log(text);</pre></code></div>
+    <div class="code"><code><pre>fs.unlinkSync('NewFile.txt');//delete 'NewFile.txt'</pre></code></div>
+    <div class="code"><code><pre>cd..//come outside of 'NewFolder'</pre></code></div>
+    <div class="code"><code><pre>fs.rmdirSync('NewFolder');//delete 'NewFolder'</pre></code></div>
+    <h2>File System Module(Async)</h2>
+    <div class="code"><code><pre>const fs=require('fs');</pre></code></div>
+<div class="code"><code><pre>fs.mkdir('NewFolder',(err)=>{
+    console.log('Folder is created');
+});</pre></code></div>
+<div class="code"><code><pre>cd NewFolder//Now we are in 'NewFolder'</pre></code></div>
+<div class="code"><code><pre>fs.writeFile("NewFile.txt" , "create if 'NewFile.txt' doesn't exist inside 'NewFolder' & add this text",(err)=>{
+    console.log('File is created');
+});</pre></code></div>
+<div class="code"><code><pre>fs.appendFile("NewFile.txt","append this text inside 'NewFile.txt'",(err)=>{
+    console.log('Text is appended');
+});</pre></code></div>
+<div class="code"><code><pre>fs.readFile('NewFile.txt','utf8',(err,data)=>{
+    console.log(data);
+});</pre></code></div>
+<div class="code"><code><pre>fs.unlink('NewFile.txt',(err)=>{
+    console.log('File is unlinked');
+});</pre></code></div>
+<div class="code"><code><pre>fs.rmdir('NewFolder',(err)=>{
+    console.log('Folder is removed');
+});</pre></code></div>
+    <h2>Operating System Module</h2>
+    <div class="code"><code><pre>const os=require('os');</pre></code></div>
+    <div class="code"><code><pre>console.log(os.arch());</pre></code></div>
+    <div class="code"><code><pre>console.log(os.freemem());</pre></code></div>
+    <div class="code"><code><pre>console.log(os.homedir());</pre></code></div>
+    <div class="code"><code><pre>console.log(os.hostname());</pre></code></div>
+    <div class="code"><code><pre>console.log(os.machine());</pre></code></div>
+    <div class="code"><code><pre>console.log(os.platform());</pre></code></div>
+    <div class="code"><code><pre>console.log(os.release());</pre></code></div>
+    <div class="code"><code><pre>console.log(os.tmpdir());</pre></code></div>
+    <div class="code"><code><pre>console.log(os.totalmem());</pre></code></div>
+    <div class="code"><code><pre>console.log(os.type());</pre></code></div>
+    <div class="code"><code><pre>console.log(os.uptime());</pre></code></div>
+    <div class="code"><code><pre>console.log(os.version());</pre></code></div>
+    <div class="code"><code><pre>console.log(os.userInfo());</pre></code></div>
+    <h2>Path Module</h2>
+    <div class="code"><code><pre>console.log(path.basename('C:\Users\sayan\Node Js\Node.js'));</pre></code></div>
+    <div class="code"><code><pre>console.log(path.dirname('C:\Users\sayan\Node Js\Node.js'));</pre></code></div>
+    <div class="code"><code><pre>console.log(path.extname('C:\Users\sayan\Node Js\Node.js'));</pre></code></div>
+    <div class="code"><code><pre></pre>console.log(path.join(__dirname , 'Node.js'));</code></div>
+    <div class="code"><code><pre>console.log(path.parse('C:\Users\sayan\Node Js\Node.js'));</pre></code></div>
+    <h2>Create and Export our own Modules</h2>
+    <div class="code"><code><pre>//module.js
+function sum(a,b){
+    return a+b;
+}
+function sub(a,b){
+    return a-b;
+}
+function mul(a,b){
+    return a*b;
+}
+function div(a,b){
+    return a/b;
+}
+module.exports={sum,sub,mul,div};</pre></code></div>
+    <div class="code"><code><pre>const math=require('./module.js');
+console.log(math.sum(10,5));
+console.log(math.sub(10,5));
+console.log(math.mul(10,5));
+console.log(math.div(10,5));</pre></code></div>
+<h2>npm</h2>
+<div class="code"><code><pre>npm init</pre></code></div>
+<div class="code"><code><pre>npm install chalk</pre></code></div>
+<div class="code"><code><pre>npm install nodemon -g</pre></code></div>
+<h2>Module Wrapper Function</h2>
+<div class="code"><code><pre>(function (exports,require,module,__filename,__dirname){
+    var a='Harry';//This is private
+});</pre></code></div>
+<h2>HTTP Module</h2>
+<div class="code"><code><pre>const http=require('http');
+const fs=require('fs');
+const PORT=process.env.PORT||8000;
+const server=http.createServer((req,res)=>{
+    if(req.url=='/'){
+    res.writeHead(200, {'Content-Type': 'text/plain'});
+    res.write('Hello World!');
+    res.end();
+    }
+    else if(req.url=='/about'){
+    const file=fs.readFileSync(__dirname + '\\about.html','utf8');
+    res.writeHead(200, {'Content-Type': 'text/html'});
+    res.end(file);
+    }
+});
+server.listen(PORT,()=>{
+    console.log('listening at',PORT);
+});</pre></code></div>
+<h2>JSON</h2>
+<div class="code"><code><pre>const obj={
+    name:'sayan',
+    age:19,
+    hobby:'cricket'
+}
+const json_data=JSON.stringify(obj);
+console.log(json_data);
+const obj_data=JSON.parse(json_data);
+console.log(obj_data);</pre></code></div>
+<h2>Streams : Downloading Big Files from Server</h2>
+<div class="code"><code><pre>//BAD WAY
+const http=require('http');
+const fs=require('fs');
+const PORT=process.env.PORT||8000;
+const server=http.createServer((req,res)=>{
+    if(req.url=='/'){
+        const file=fs.readFileSync(__dirname + '\\sample.txt','utf8');
+        res.end(file);
+    }
+});
+server.listen(PORT,()=>{
+    console.log('listening at',PORT);
+});
+//GOOD WAY.
+const http=require('http');
+const fs=require('fs');
+const PORT=process.env.PORT||8000;
+const server=http.createServer((req,res)=>{
+    if(req.url=='/'){
+        const file=fs.createReadStream(__dirname + '//sample.txt');
+        file.pipe(res);
+    }
+});
+server.listen(PORT,()=>{
+    console.log('listening at',PORT);
+});</pre></code></div>
+<h2>Streams : Copy Files on File Systems</h2>
+<div class="code"><code><pre>//BAD WAY
+const http=require('http');
+const fs=require('fs');
+const PORT=process.env.PORT||8000;
+const server=http.createServer((req,res)=>{
+    if(req.url=='/'){
+        const file=fs.readFileSync(__dirname + '\\sample.txt','utf8');
+        fs.writeFileSync('copy.txt',file);
+        res.end();
+    }
+});
+server.listen(PORT,()=>{
+    console.log('listening at',PORT);
+});
+//GOOD WAY.
+const http=require('http');
+const fs=require('fs');
+const PORT=process.env.PORT||8000;
+const server=http.createServer((req,res)=>{
+    if(req.url=='/'){
+        const rs=fs.createReadStream(__dirname + '//sample.txt');
+        const ws=fs.createWriteStream(__dirname+'//copy.txt');
+        rs.on('data',(chunk)=>{
+        ws.write(chunk.toString());
+        })
+        res.end();
+    }
+});
+server.listen(PORT,()=>{
+    console.log('listening at',PORT);
+});</pre></code></div>
+</body>
+</html>
